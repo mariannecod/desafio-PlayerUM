@@ -1,0 +1,1359 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+	<head>
+	
+		<meta charset="utf-8" />
+		
+		<title>To-Do List</title>
+		
+		<link rel="icon" type="image/svg" href="https://images.emojiterra.com/google/noto-emoji/unicode-16.0/color/svg/1f4d1.svg">
+		<link rel="apple-touch-icon" type="image/svg" sizes="180x180" href="https://images.emojiterra.com/google/noto-emoji/unicode-16.0/color/svg/1f4d1.svg">
+		<!--<link rel="manifest" href="">-->
+		
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Neuton:ital,wght@0,200;0,300;0,400;0,700;0,800;1,400&display=swap" rel="stylesheet">
+		
+		<!-- Inicio: 07/02/2025 - Finalizado: 10/02/2025  -->
+		<meta name="description" content="Página de Teste, para vaga de Desenvolvedor Front-end Playerum. Melhor To-do para chegar no ritmo do dia a dia com um toque de diversão. Embarque nessa missão!">
+		<meta name="keywords" content="to-do list">
+		<meta name=”theme-color” content=”rgb(2,0,36)”>
+		<meta name="author" content="Marianne">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="robots" content="noindex">
+		
+		
+		
+		
+		<style>
+		
+			
+			:root
+			{
+				 
+				--color-light: #f9f9f9;
+				--color-dark: #040404;
+				
+			}
+			
+			::selection
+			{
+				background-color: #410066;
+				color:var(--color-light);
+			}
+
+			html
+			{
+
+				color-scheme: light dark;
+
+			}
+
+
+			body
+			{
+				
+				min-height:100vh;
+				
+				background: linear-gradient(315deg, rgba(2,0,36,1) 0%, rgba(24,4,126,1) 25%, rgba(45,8,222,1) 55%, rgba(0,97,255,1) 100%) no-repeat;
+				background-color: rgb(2,0,36);
+				background-size: auto 100%;
+				color: var(--color-light);
+				
+				text-align:center;
+				
+			}
+
+			h1
+			{
+				
+				text-shadow: 1px 1px 1px #000;
+				
+				font-family: "Neuton", serif;
+				font-size:40px;
+				
+				
+			}
+			
+			main
+			{
+				
+				display: flex;
+				justify-content: center;
+				flex-wrap: wrap;
+				flex-direction: column;
+				align-items: center;
+				
+			}
+			
+			
+			input[type=text]
+			{
+				
+				min-width:60vw;
+				
+				font-size:20px;
+				
+			}
+			
+			#btn-add-task
+			{
+				
+				width: 30px;
+				height: 30px;
+				
+				border: 2px solid darkgreen;
+				border-radius: 50%;
+				
+				background-color: #084b18;
+				color: #afb6bd;
+				
+				font-weight: bold;
+				font-size: 20px;
+				line-height: 0;
+				
+			}
+			
+			
+			.alert-input-empty
+			{
+				
+				background-color: Red;
+				color: Black;
+				
+				border: 2px solid rgba(160,175,180,0.9);
+				border-radius:2px;
+				
+				&:focus
+				{
+					border: 2px solid orange !important;
+					outline: 2px solid orange !important;
+					border-radius:2px !important;
+				}
+				
+			}
+			
+			
+			#details-add-task
+			{
+				
+				display: flex;
+				flex-direction: column;
+				
+				margin-top:10px;
+				
+			}
+			
+			#organize-div-add-task-details
+			{
+				
+				display: flex;
+				flex-direction: column;
+				
+			}
+			
+			#details-add-task textarea
+			{
+				min-width: 60.5vw;
+				min-height: 310px;
+				margin: 7px auto;
+				
+				font-size:20px;
+				
+			}
+			
+			#details-add-task label 
+			{
+				margin:7px auto;
+			}
+			
+			textarea:focus
+			{
+				
+				border: 2px solid rgb(160,175,180);
+				outline: 3px solid rgba(72, 14, 134, 0.8);
+				border-radius:2px;
+				
+			}
+			
+			input:focus
+			{
+				
+				border: 2px solid rgb(160,175,180);
+				outline: 3px solid rgba(72, 14, 134, 0.8);
+				border-radius:2px;
+				
+			}
+			
+			button
+			{
+				
+				cursor:pointer;
+				
+			}
+			
+			#info-board
+			{
+				
+				display: flex;
+				justify-content: space-between;
+				
+			}
+			
+			#task-board
+			{
+				
+				min-height:45vh;
+				
+			}
+			
+			.task
+			{
+				
+				display: grid;
+				grid-template-columns: 40px auto 40px 40px;
+				gap: 5px;
+				
+				min-width:57vw;
+				min-height: 120px;
+				margin: 10px auto;
+				padding: 15px;
+				
+				border-radius: 12px 2px;
+				
+				background-color: var(--color-light);
+				color: var(--color-dark);
+				
+				box-shadow: 1px 1px 9px #2a262f;
+				
+			}
+			
+			.animation-creator-task
+			{
+
+				-webkit-animation: creator-task 0.5s cubic-bezier(0.400, 0.500, 0.600, 1.000) both;
+				animation: creator-task 0.5s cubic-bezier(0.400, 0.500, 0.600, 1.000) both;
+
+			}
+
+			@-webkit-keyframes creator-task {
+				0%
+				{
+					-webkit-transform: scale(0.5);
+					transform: scale(0.5);
+					-webkit-transform-origin: 50% 0%;
+					transform-origin: 50% 0%;
+				}
+				100%
+				{
+					-webkit-transform: scale(1);
+							transform: scale(1);
+					-webkit-transform-origin: 50% 0%;
+					transform-origin: 50% 0%;
+				}
+			}
+
+			@keyframes creator-task
+			{
+				0%
+				{
+					-webkit-transform: scale(0.5);
+					transform: scale(0.5);
+					-webkit-transform-origin: 50% 0%;
+					transform-origin: 50% 0%;
+				}
+				100%
+				{
+					-webkit-transform: scale(1);
+					transform: scale(1);
+					-webkit-transform-origin: 50% 0%;
+					transform-origin: 50% 0%;
+				}
+			}
+
+			.task div
+			{
+				
+				display: flex;
+				justify-content: space-between;
+				flex-wrap: nowrap;
+				flex-direction: column;
+				align-items: center;
+				
+			}
+			
+			
+			.task b[contenteditable=true]
+			{
+
+				min-width:30px;
+
+				border-bottom: 1px solid var(--color-dark);
+
+			}
+
+			.task p[contenteditable=true]
+			{
+
+				min-width:30px;
+
+				padding: 4px;
+
+				border: 1px solid var(--color-dark);
+
+			}
+
+			.task time span[contenteditable=true]
+			{
+
+				display: inline-block;
+
+				padding: 0 8px;
+
+				border: 1px solid var(--color-dark);
+
+			}
+			
+			.strikethrough
+			{
+				
+				text-decoration: line-through;
+				transition: text-decoration 5s ease-in-out;
+				
+			}
+			
+			.accomplished-task
+			{
+
+				color: rgba(138, 91, 196, 0.6) !important;
+				filter: opacity(0.9)hue-rotate(-15deg);
+
+			}
+
+			.creation-time
+			{
+				
+				color:#737373;
+				
+				font-size:10px;
+				
+			}
+			
+			.btn-edite
+			{
+				
+				width: 40px;
+				height: 40px;
+				margin-top: 40px;
+				
+				border-color: #a8a824;
+				border-radius: 50%;
+				
+				background-color: #ffbf00;
+				
+				text-shadow: 0px 0px 3px black;
+				
+			}
+			
+			.animation-edit-task
+			{
+				-webkit-animation: edit-task 1s linear both;
+				animation: edit-task 1s linear both;
+			}
+
+
+			@-webkit-keyframes edit-task
+			{
+				0%
+				{
+					-webkit-transform: rotateY(0);
+					transform: rotateY(0);
+				}
+				50%
+				{
+					-webkit-transform: rotateY(-90deg);
+					transform: rotateY(-90deg);
+				}
+				100%
+				{
+					-webkit-transform: rotateY(0deg);
+					transform: rotateY(0deg);
+				}
+			}
+			
+			@keyframes edit-task
+			{
+				0%
+				{
+					-webkit-transform: rotateY(0);
+					transform: rotateY(0);
+				}
+				50%
+				{
+					-webkit-transform: rotateY(-90deg);
+					transform: rotateY(-90deg);
+				}
+				100%
+				{
+					-webkit-transform: rotateY(0deg);
+					transform: rotateY(0deg);
+				}
+			}
+
+			.btn-confirm-edit
+			{
+
+				width: 40px;
+				height: 40px;
+				margin-top: 40px;
+
+				border-color: #014804;
+				border-radius: 50%;
+
+				background-color: #128a12;
+
+				text-shadow: 0px 0px 3px black;
+
+			}
+
+			.btn-cancel-edit
+			{
+
+				width: 40px;
+				height: 40px;
+				margin-top: 40px;
+
+				border-color: #b10104;
+				border-radius: 50%;
+
+				background-color: #550000;
+
+				text-shadow: 0px 0px 3px black;
+
+			}
+
+
+
+			.btn-delete
+			{
+				
+				width: 40px;
+				height: 40px;
+				margin-top: 40px;
+				
+				border-color: #881a1a;
+				border-radius: 50%;
+				
+				background-color: #ff0101;
+				
+				text-shadow: 1px 1px 1px black;
+				
+			}
+			
+			.animation-delete-task
+			{
+				-webkit-animation: delete-task 0.5s ease-in-out both;
+				animation: delete-task 0.5s ease-in-out both;
+			}
+
+			@-webkit-keyframes delete-task {
+				0%
+				{
+					-webkit-transform: scaleX(1);
+					transform: scaleX(1);
+				}
+				100%
+				{
+					-webkit-transform: scaleX(0.0);
+					transform: scaleX(0.0);
+				}
+			}
+			@keyframes delete-task {
+				0%
+				{
+					-webkit-transform: scaleX(1);
+					transform: scaleX(1);
+				}
+				100%
+				{
+					-webkit-transform: scaleX(0.0);
+					transform: scaleX(0.0);
+				}
+			}
+
+
+			footer
+			{
+				
+				margin-top: 50px;
+				
+			}
+			
+			.none
+			{
+
+				display:none;
+
+			}
+
+			/* Dark mode styles */
+
+			@media (prefers-color-scheme: dark)
+			{
+				
+				:root
+				{
+				 
+					--color-light: #040404;
+					--color-dark: #f9f9f9;
+				
+				}
+
+				body
+				{
+
+					background: linear-gradient(315deg, rgb(3, 32, 79) 0%, rgb(36, 12, 153) 25%, rgb(24, 4, 126) 100%) no-repeat;;
+					color: var(--color-dark);
+
+				}
+
+				#btn-dark-mode
+				{
+
+					background: #2b2a33;
+
+				}
+
+			}
+
+		
+		</style>
+	
+	</head>
+
+	<body>
+	
+		<header>
+		
+			<h1>To-Do List</h1>
+		
+		</header>
+		
+		<main>
+			
+			<section>
+			
+				<h2>Qual será a sua próxima missão?</h2>
+			
+				<div id="configuration-new-task">
+					<input id="input-text-task" type="text" placeholder="Escreva sua nova meta aqui! 📝 🫡 😎 🚀">
+					<button id="btn-add-task" type="button" title="Adicionar Atividade">+</button>
+					<details id="details-add-task">
+						<summary>Detalhar Meta</summary>
+						
+						<div id="organize-div-add-task-details">
+							<textarea id="text-details-task" placeholder="Detalhe sua nova meta aqui! ✒️ 📊 😎"></textarea>
+							<label>Agende sua Missão🗓️:
+							<div>
+								<input id="date-task" type="date"/>
+								<input id="time-task" type="time"/>
+							</div></label>
+						</div>
+						
+					</details>
+				</div>
+			
+			</section>
+			
+			<section>
+			
+				<h2>Objetivos:</h2>
+				
+				<div id="info-board">
+					<p title="Conclua missões para ganhar moedas">🐷: 🪙 <span id="view-total-of-money"></span> </p>
+					<p>Misões Feitas: 0/0</p>
+				</div>
+				
+				<div id="task-board">
+				</div>
+			
+			</section>
+			
+		</main>
+		
+
+		<footer>
+		
+			
+			©2025
+			
+		
+		</footer>
+		
+	
+	
+
+		<script type="text/javascript">
+			
+			/* Pegar elementos do documento */
+			const input_text_task = document.getElementById("input-text-task");
+			const btn_add_task = document.getElementById("btn-add-task");
+			const text_details_task = document.getElementById("text-details-task");
+			const input_date_task = document.getElementById("date-task");
+			const input_time_task = document.getElementById("time-task");
+			const info_board = document.getElementById("info-board");
+			const text_money = document.getElementById("view-total-of-money");
+			const info_board_elements = info_board.getElementsByTagName("p");
+			const task_board = document.getElementById("task-board");
+			const tasks = document.getElementsByClassName("task"); 
+
+			let money = 0;
+			const array_tasks = [];
+			
+			input_date_task.min = MinDateTask ();
+			
+
+
+			input_text_task.addEventListener ("input",()=>{
+				
+				input_text_task.placeholder = "Escreva sua nova meta aqui! 📝 🫡 😎 🚀";
+				input_text_task.classList.remove("alert-input-empty");
+				
+			});
+
+			input_text_task.addEventListener('keyup', function(e){
+
+				let key = e.which || e.keyCode;
+
+				if (key == 13) {
+
+					TaskCreator(true,"");
+
+				}
+
+			});
+			
+			btn_add_task.addEventListener ("click", () =>{
+				
+				TaskCreator(true,"");
+				
+			});
+
+
+			
+			/*Verificar se já Existe Dinheiro Salvou no localStorage, e Adicionar no Quadro de Informações*/
+			if (localStorage.getItem("money"))
+			{
+					
+					let get = localStorage.getItem("money");
+					money = Number(get);
+					
+					text_money.innerText = money;
+					
+			}
+			else
+			{
+				
+				localStorage.setItem("money", money);
+				
+				text_money.innerText = money;
+				
+			}
+			
+			/*Verificar se já Existem Tarefas Salvas no localStorage, e Adicionar no Quadro de Tarefas*/
+			if (localStorage.getItem("tasks"))
+			{
+			
+				
+				for (let a = 0; a < JSON.parse(localStorage.getItem("tasks")).length; a++)
+				{
+					array_tasks.push(JSON.parse(localStorage.getItem("tasks"))[a]);
+				}
+				
+				
+				for (let t = 0; t < array_tasks.length; t++)
+				{
+					TaskCreator(false, t);
+					
+				}
+				
+				info_board_elements[1].innerText = "Misões Feitas: " + TasksDone() + "/" + array_tasks.length;
+				
+				if (array_tasks.length === 0)
+				{
+					task_board.innerText = "Estamos sem objetivos!⚠️ \n Adione mais metas na missão, Capitão! 🧑‍🚀";
+				}
+				
+			}
+			else
+			{
+				
+				localStorage.setItem("tasks", JSON.stringify(array_tasks));
+				
+				task_board.innerText = "Não encontramos nenhuma meta! 🔭 \n Adicione uma meta no painel acima, Capitão! 🧑‍✈️";
+				
+			}
+
+
+
+			
+			function TaskCreator (new_task,content_task) {
+			
+				if ((input_text_task.value === "") && (new_task === true))
+				{
+					
+					/*
+						Efeito Sonoro de Pixabay (https://pixabay.com/pt/sound-effects/) do Artista Universfield (https://unil.ink/universfield)
+						https://pixabay.com/pt/sound-effects/error-call-to-attention-129258/
+					*/
+					let audio_error = new Audio("https://cdn.pixabay.com/download/audio/2022/12/13/audio_34d1e8985e.mp3");
+					
+					input_text_task.placeholder = "Nenhuma meta preenchida, escreva aqui.";
+					input_text_task.focus();
+					input_text_task.classList.add("alert-input-empty");
+					
+					audio_error.play();
+					
+				}
+				else
+				{
+					/* Criar elementos dinamicamente */
+					const div_task = document.createElement("div");
+					const input_checkbox = document.createElement("input");
+					const div_organize_info = document.createElement("div");
+					const text_bold = document.createElement("b");
+					const details_task = document.createElement("details");
+					const summary = document.createElement("summary");
+					const text_details = document.createElement("p");
+					const scheduled_date = document.createElement("time");
+					const creation_time = document.createElement("time");
+					const btn_edite = document.createElement("button");
+					const btn_delete = document.createElement("button");
+					const btn_confirm_edit = document.createElement("button");
+					const btn_cancel_edit = document.createElement("button");
+					
+					/*Manipulação*/
+					let id_task;
+					let description;
+					let scheduled;
+					let now_date;
+					
+					/*Colocar atributos nos elementos*/
+					input_checkbox.type = "checkbox";
+					input_checkbox.name = "feito";
+					text_bold.contentEditable = "false";
+					text_details.contentEditable = "false";
+					btn_edite.type = "button";
+					btn_delete.type = "button";
+					input_checkbox.title = "Feito";
+					btn_edite.title = "Editar Missão";
+					btn_delete.title = "Deletar Missão";
+					
+					/*Adicionar class aos elementos*/
+					div_task.classList.add("task");
+					creation_time.classList.add("creation-time");
+					btn_edite.classList.add("btn-edite");
+					btn_delete.classList.add("btn-delete");
+					btn_confirm_edit.classList.add("btn-confirm-edit");
+					btn_cancel_edit.classList.add("btn-cancel-edit");
+					btn_confirm_edit.classList.add("none");
+					btn_cancel_edit.classList.add("none");
+
+					
+					
+					/*Adicionar texto aos elementos*/
+					summary.innerText = "Detalhes da Missão"
+					btn_edite.innerText = "✏️";
+					btn_delete.innerText = "🗑️";
+					btn_confirm_edit.innerText = "✔️️";
+					btn_cancel_edit.innerText = "❌";
+					
+					/*Funções Embutidas nos Botões*/
+					input_checkbox.onclick = function ()
+					{
+						let div = this.parentElement;
+						let txt = div.getElementsByTagName("b");
+						
+						
+						if (input_checkbox.checked)
+						{
+							
+							div.classList.add("accomplished-task");
+							txt[0].classList.add("strikethrough");
+							ModifyCheckedOfObjectInArray(array_tasks,div.dataset.idu,true);
+							
+							money = money + 50;
+							
+							text_money.innerText = money;
+							
+							
+							localStorage.setItem("money", money);
+							
+						}
+						else
+						{
+							
+							div.classList.remove("accomplished-task");
+							txt[0].classList.remove("strikethrough");
+							ModifyCheckedOfObjectInArray(array_tasks,div.dataset.idu,false);
+							
+							if (money > 0)
+							{
+								
+								money = money - 50;
+								
+								text_money.innerText = money;
+								
+								localStorage.setItem("money", money);
+								
+							}
+						}
+						
+					};
+					
+					if (array_tasks.length === 0)
+					{
+						
+						task_board.innerText = "";
+						
+					}
+					
+					btn_edite.onclick = function ()
+					{
+
+						let div = this.parentElement;
+						let title = div.getElementsByTagName("b");
+						let txt = div.getElementsByTagName("p");
+						let span = div.getElementsByTagName("span");
+						let btns = div.getElementsByTagName("button");
+
+						div_task.classList.add("animation-edit-task");
+
+						setTimeout(()=>{
+
+							title[0].contentEditable = "true";
+							title[0].focus();
+							txt[0].contentEditable = "true";
+							span[0].contentEditable = "true";
+							btns[0].classList.add("none");
+							btns[1].classList.add("none");
+							btns[2].classList.remove("none");
+							btns[3].classList.remove("none");
+
+						},500);
+
+						setTimeout(()=>{
+						div_task.classList.remove("animation-edit-task");
+						},1000);
+
+					}
+					
+					btn_confirm_edit.onclick = function ()
+					{
+
+						let div = this.parentElement;
+						let title = div.getElementsByTagName("b");
+						let txt = div.getElementsByTagName("p");
+						let span = div.getElementsByTagName("span");
+						let btns = div.getElementsByTagName("button");
+						let div_index;
+
+						for (let e = 1; e < task_board.childNodes.length; e++)
+						{
+
+							div_index = e;
+
+							if(task_board.childNodes[e].dataset.idu === div.dataset.idu)
+							{
+								break;
+							}
+
+						};
+
+
+
+						div_task.classList.add("animation-edit-task");
+
+						setTimeout(()=>{
+
+							title[0].contentEditable = "false";
+							txt[0].contentEditable = "false";
+							span[0].contentEditable = "false";
+							btns[0].classList.remove("none");
+							btns[1].classList.remove("none");
+							btns[2].classList.add("none");
+							btns[3].classList.add("none");
+
+							ModifyTitleOfObjectInArray(array_tasks,div.dataset.idu,title[0].textContent);
+							ModifyDetailsOfObjectInArray(array_tasks,div.dataset.idu,txt[0].textContent);
+							ModifyDateMarkedOfObjectInArray(array_tasks,div.dataset.idu,span[0].textContent);
+
+
+
+
+
+							text_bold.innerText = array_tasks[(div_index - 1)].title;
+							text_details.innerText = array_tasks[(div_index - 1)].details;
+
+							if (array_tasks[(div_index - 1)].data_marked === "")
+							{
+								scheduled_date.innerHTML = "<span>" + array_tasks[(div_index - 1)].data_marked + "</span>";
+							}
+							else
+							{
+								scheduled_date.innerHTML = "Meta estabelecida para: " + "<span>" + array_tasks[(div_index - 1)].data_marked + "</span>";
+							}
+
+
+							},500);
+
+							setTimeout(()=>{
+							div_task.classList.remove("animation-edit-task");
+							},1000);
+
+					}
+
+					btn_cancel_edit.onclick = function ()
+					{
+
+						let div = this.parentElement;
+						let title = div.getElementsByTagName("b");
+						let txt = div.getElementsByTagName("p");
+						let span = div.getElementsByTagName("span");
+						let btns = div.getElementsByTagName("button");
+
+						div_task.classList.add("animation-edit-task");
+
+						setTimeout(()=>{
+
+							title[0].contentEditable = "false";
+							txt[0].contentEditable = "false";
+							span[0].contentEditable = "false";
+							btns[0].classList.remove("none");
+							btns[1].classList.remove("none");
+							btns[2].classList.add("none");
+							btns[3].classList.add("none");
+
+
+
+							text_bold.innerText = array_tasks[content_task].title;
+							text_details.innerText = array_tasks[content_task].details;
+
+							if (array_tasks[content_task].data_marked === "")
+							{
+								scheduled_date.innerHTML = "<span>" + array_tasks[content_task].data_marked + "</span>";
+							}
+							else
+							{
+								scheduled_date.innerHTML = "Meta estabelecida para: " + "<span>" + array_tasks[content_task].data_marked + "</span>";
+							}
+
+
+							},500);
+
+							setTimeout(()=>{
+							div_task.classList.remove("animation-edit-task");
+							},1000);
+
+					}
+
+					btn_delete.onclick = function ()
+					{
+						
+						let div = this.parentElement;
+						let div_index;
+						
+						for (let d = 1; d < task_board.childNodes.length; d++)
+						{
+							
+							div_index = d;
+							
+							if(task_board.childNodes[d].dataset.idu === div.dataset.idu)
+							{
+								break;
+							}
+							
+						}
+						
+						array_tasks.splice(div_index - 1,1);
+						localStorage.setItem("tasks", JSON.stringify(array_tasks));
+						
+						div_task.classList.add("animation-delete-task");
+						
+						setTimeout(()=>{ div.remove(); },500);
+						
+						
+						
+						if (array_tasks.length === 0)
+						{
+							
+							task_board.innerText = "Estamos sem objetivos!⚠️ \n Adione mais metas na missão, Capitão! 🧑‍🚀";
+							
+						}
+						
+						info_board_elements[1].innerText = "Misões Feitas: " + TasksDone() + "/" + array_tasks.length;
+						
+					}
+					
+					if (new_task === true)
+					{
+						text_bold.innerText = input_text_task.value;
+						id_task = div_task.dataset.idu = GetIDUnique();
+						now_date = DataNow();
+						
+						div_task.classList.add("animation-creator-task");
+						setTimeout(()=>{div_task.classList.remove("animation-creator-task")},1000);
+						
+						
+						creation_time.innerText = "Criado em: " + DataNow();
+						
+						if (text_details_task.value === "")
+						{
+							
+							description = "Não temos detalhes para te informa! Está é uma missão secreta! 🕵️"
+							text_details.innerText = description;
+							
+						}
+						else
+						{
+							description = text_details_task.value
+							text_details.innerText = description;
+							
+							
+						}
+						
+						if ((input_date_task.value === "") && (input_time_task.value === ""))
+						{
+							
+							scheduled = "";
+							scheduled_date.innerHTML = "<span>" + scheduled + "</span>";
+							
+						}
+						else if ((input_date_task.value != "") && (input_time_task.value === ""))
+						{
+							
+							scheduled = ModifyDateMarkedForLocalDate(input_date_task.value);
+							scheduled_date.innerHTML = "Meta estabelecida para: " + "<span>" + scheduled + "</span>";
+							
+						}
+						else if ((input_date_task.value === "") && (input_time_task.value != ""))
+						{
+							
+							scheduled = input_time_task.value;
+							scheduled_date.innerHTML = "Meta estabelecida para: " + "<span>" + scheduled + "</span>";
+						}
+						else
+						{
+							
+							scheduled = input_time_task.value + " - " + ModifyDateMarkedForLocalDate(input_date_task.value);
+							scheduled_date.innerHTML = "Meta estabelecida para: " + "<span>" + scheduled + "</span>";
+							
+						}
+						
+						
+						array_tasks.push({id: id_task, checked: false, title: input_text_task.value, details: description, data_marked: scheduled, date_creator: now_date,});
+						localStorage.setItem("tasks", JSON.stringify(array_tasks));
+
+						/* Limpar Formulário de Tarefa */
+						input_text_task.placeholder = "Escreva sua nova meta aqui! 📝 🫡 😎 🚀";
+						input_text_task.value = "";
+						text_details_task.value = "";
+						input_date_task.value = "";
+						input_time_task.value = "";
+					
+						input_text_task.classList.remove("alert-input-empty");
+
+						
+					}
+					else
+					{
+						
+						div_task.dataset.idu = array_tasks[content_task].id;
+						
+						if (array_tasks[content_task].checked === true)
+						{
+							
+							input_checkbox.checked = true;
+							div_task.classList.add("accomplished-task");
+							text_bold.classList.add("strikethrough");
+							
+						}
+						else
+						{
+							
+							input_checkbox.checked = false;
+							div_task.classList.remove("accomplished-task");
+							text_bold.classList.remove("strikethrough");
+							
+						}
+						
+						text_bold.innerText = array_tasks[content_task].title;
+						text_details.innerText = array_tasks[content_task].details;
+						
+						if (array_tasks[content_task].data_marked === "")
+						{
+							scheduled_date.innerHTML = "<span>" + array_tasks[content_task].data_marked + "</span>";
+						}
+						else
+						{
+							scheduled_date.innerHTML = "Meta estabelecida para: " + "<span>" + array_tasks[content_task].data_marked; + "</span>";
+						}
+						
+						creation_time.innerText = "Criado em: " + array_tasks[content_task].date_creator;
+						
+					}
+					
+					details_task.appendChild(summary);
+					details_task.appendChild(text_details);
+					
+					div_organize_info.appendChild(text_bold);
+					div_organize_info.appendChild(details_task);
+					div_organize_info.appendChild(scheduled_date);
+					div_organize_info.appendChild(creation_time);
+					
+					div_task.appendChild(input_checkbox);
+					div_task.appendChild(div_organize_info);
+					div_task.appendChild(btn_edite);
+					div_task.appendChild(btn_delete);
+					div_task.appendChild(btn_confirm_edit);
+					div_task.appendChild(btn_cancel_edit);
+					task_board.appendChild(div_task);
+					
+					
+					info_board_elements[1].innerText = "Misões Feitas: " + TasksDone() + "/" + array_tasks.length;
+					
+				}
+				
+			
+			};
+			
+			
+			/* Gerar ID único */
+			function GeneratorIDUnique()
+			{
+
+				return Math.random().toString(36).substring(2, length+8);
+
+			};
+			
+			function VerificyExistingID(array,id)
+			{
+				let exist = [];
+
+				array.forEach((obj) => {
+
+					if(obj.id === id)
+					{
+
+						exist.push(obj.id)
+
+					}
+
+				});
+
+				return (exist.length > 0)? true:false;
+				
+			};
+			
+			function GetIDUnique()
+			{
+
+				const limit = 300;
+				let attempts = 0;
+				let id = false;
+
+				while (!id && attempts < limit)
+				{
+					id = GeneratorIDUnique();
+
+					if(VerificyExistingID(array_tasks,id))
+					{
+
+						id = false;
+						attempts++;
+
+					}
+
+				};
+
+				return id;
+
+			}
+
+			/*Fim de ID único*/
+
+			function DataNow()
+			{
+				
+				const date = new Date();
+				
+				let day = date.getDate();
+				let month = date.getMonth() + 1;
+				let year = date.getFullYear();
+				let hour = date.getHours();
+				let minute = date.getMinutes();
+				
+				if (day < 10)
+				{
+					day = "0" + day;
+				}
+				
+				if (month < 10)
+				{
+					month = "0" + month;
+				}
+				
+				if (hour < 10)
+				{
+					hour = "0" + hour;
+				}
+				
+				if (minute < 10)
+				{
+					minute = "0" + minute;
+				}
+				
+				const date_time_creator_edit = day + "/" + month + "/" + year + " - " + hour + ":" + minute;
+				
+				return date_time_creator_edit;
+				
+			}
+			
+			function MinDateTask()
+			{
+				
+				let date = new Date();
+				
+				let year = date.getFullYear();
+				let month = date.getMonth() + 1;
+				let day = date.getDate();
+				
+				if (month < 10)
+				{
+					
+					month = "0" + month;
+					
+				}
+				
+				if (day < 10)
+				{
+					
+					day = "0" + day;
+					
+				}
+				
+				let date_today = year + "-" + month + "-" + day;
+				
+				
+				
+				return date_today;
+			}
+			
+			function ModifyDateMarkedForLocalDate (date_marked)
+			{
+				
+				const date = new Date(date_marked);
+				
+				const date_local = new Intl.DateTimeFormat(navigator.userlanguage).format(date);
+				
+				return date_local;
+				
+			}
+			
+			function TasksDone()
+			{
+				
+				let task_done = 0;
+				
+				for (let d = 0; d < array_tasks.length; d++)
+				{
+					
+					if (array_tasks[d].checked === true)
+					{
+						
+						++task_done;
+						
+					}
+					
+				}
+				
+				return task_done;
+				
+			}
+			
+			function ModifyCheckedOfObjectInArray(array,id,new_value)
+			{
+				
+				array.forEach((obj) => {
+					if(obj.id === id)
+					{
+						
+						obj.checked = new_value;
+						
+					}
+				});
+				
+				info_board_elements[1].innerText = "Misões Feitas: " + TasksDone() + "/" + array_tasks.length;
+				
+				localStorage.setItem("tasks", JSON.stringify(array));
+				
+			}
+			
+			function ModifyTitleOfObjectInArray(array,id,new_value)
+			{
+
+				array.forEach((obj) => {
+					if(obj.id === id)
+					{
+
+						obj.title = new_value;
+
+					}
+				});
+
+				localStorage.setItem("tasks", JSON.stringify(array));
+
+			}
+
+			function ModifyDetailsOfObjectInArray(array,id,new_value)
+			{
+
+				array.forEach((obj) => {
+					if(obj.id === id)
+					{
+
+						obj.details = new_value;
+
+					}
+				});
+
+				localStorage.setItem("tasks", JSON.stringify(array));
+
+			}
+
+			function ModifyDateMarkedOfObjectInArray(array,id,new_value)
+			{
+
+				array.forEach((obj) => {
+					if(obj.id === id)
+					{
+
+						obj.data_marked = new_value;
+
+					}
+				});
+
+				localStorage.setItem("tasks", JSON.stringify(array));
+
+			}
+			
+		</script>
+		
+		<noscript>
+			Para o funcionamento adequado, por favor, ative o JavaScript do seu navegar!
+		</noscript>
+	
+	</body>
+
+</html>
