@@ -922,6 +922,20 @@
 						let txt = div.getElementsByTagName("p");
 						let span = div.getElementsByTagName("span");
 						let btns = div.getElementsByTagName("button");
+						let div_index;
+
+						for (let e = 1; e < task_board.childNodes.length; e++)
+						{
+
+							div_index = e;
+
+							if(task_board.childNodes[e].dataset.idu === div.dataset.idu)
+							{
+								break;
+							}
+
+						};
+
 
 						div_task.classList.add("animation-edit-task");
 
@@ -937,16 +951,16 @@
 
 
 
-							text_bold.innerText = array_tasks[content_task].title;
-							text_details.innerText = array_tasks[content_task].details;
+							text_bold.innerText = array_tasks[(div_index - 1)].title;
+							text_details.innerText = array_tasks[(div_index - 1)].details;
 
-							if (array_tasks[content_task].data_marked === "")
+							if (array_tasks[(div_index - 1)].data_marked === "")
 							{
-								scheduled_date.innerHTML = "<span>" + array_tasks[content_task].data_marked + "</span>";
+								scheduled_date.innerHTML = "<span>" + array_tasks[(div_index - 1)].data_marked + "</span>";
 							}
 							else
 							{
-								scheduled_date.innerHTML = "Meta estabelecida para: " + "<span>" + array_tasks[content_task].data_marked + "</span>";
+								scheduled_date.innerHTML = "Meta estabelecida para: " + "<span>" + array_tasks[(div_index - 1)].data_marked + "</span>";
 							}
 
 
